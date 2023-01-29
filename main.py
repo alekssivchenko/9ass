@@ -2,26 +2,44 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def main():
-    credits = pd.read_csv("./credits.csv")
-    titles = pd.read_csv("./titles.csv")
+credits = pd.read_csv("./credits.csv")
+titles = pd.read_csv("./titles.csv")
 
 
+def fig_1():
     scores = titles[titles['type'] == "MOVIE"]['imdb_score'].dropna()
-    scores1 = titles[titles['type'] == "SHOW"]['imdb_score'].dropna()
     figure = plt.figure(figsize=(16, 6))
-    #plt.hist(scores, np.arange(0, 10.2, 0.2))
-    plt.hist(scores1, np.arange(0, 10.2, 0.2))
-    #scores2 = titles.groupby(by=['type'])['imdb_score'].mean()
-    #print(scores2)
+    plt.hist(scores, np.arange(0, 10.2, 0.2))
     plt.axvline(scores.mean(), color='k', linestyle='dashed', linewidth='2')
     plt.xlabel("Score")
     plt.ylabel("Num")
-    plt.title("Scores counted")
-    plt.show()
+    plt.title("MOVIE")
     #plt.savefig(fname='plot1.png')
 
+def fig_2():
+    scores = titles[titles['type'] == "SHOW"]['imdb_score'].dropna()
+    figure = plt.figure(figsize=(16, 6))
+    plt.hist(scores, np.arange(0, 10.2, 0.2))
+    plt.axvline(scores.mean(), color='k', linestyle='dashed', linewidth='2')
+    plt.xlabel("Score")
+    plt.ylabel("Num")
+    plt.title("SHOW")
+
+def mean():
+    print(titles.groupby(by=["type"])["imdb_score"].mean())
+    mean1 = titles[titles["type"] == "SHOW"]["imdb_score"].mean()
+    mean2 = titles[titles["type"] == "MOVIE"]["imdb_score"].mean()
+    if mean2 > mean1:
+        print("MOVIE average is greater")
+    else:
+        print("SHOW average is greater")
+
+def task1():
+    global titles
+    bins = np.arange(0, 10 + 0.2, 0.2)
+    hists = titles.hist(column='imdb_score', by='type', bins=bins, linewidth=2, xlabelsize=5)
 
 
-
-main()
+task1()
+mean()
+plt.show()
