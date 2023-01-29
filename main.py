@@ -37,8 +37,10 @@ def mean():
 def task1():
     global titles
     bins = np.arange(0, 10 + 0.2, 0.2)
-    hists = titles.hist(column='imdb_score', by='type', bins=bins, linewidth=2, xlabelsize=5)
-
+    hists = titles.hist(column='imdb_score', by='type', bins=bins, linewidth=0.5, xlabelsize=5)
+    for hist in hists:
+            hist.set_xticks(bins)
+            hist.grid()
 
 task1()
 mean()
